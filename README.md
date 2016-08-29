@@ -1,4 +1,4 @@
-# hkipo
+# HKIPO
 
 Crawl Hong Kong IPO data from aastocks.
 
