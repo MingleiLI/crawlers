@@ -1,4 +1,10 @@
+"""
+Update Proxy List; Should be updated everyday
+"""
+
+
 from selenium import webdriver
+import random
 
 phantomjs_path = '/home/guan/Software/phantomjs-2.1.1-linux-x86_64/bin/phantomjs'
 
@@ -8,9 +14,8 @@ free_proxy_base_url = 'http://www.kuaidaili.com/free/inha/'
 #free_proxy_base_url = 'http://www.kuaidaili.com/free/outha/'
 
 test_url = 'http://www.baidu.com'
-ip_proxy_set = set()
 
-
+#Check if a proxy works
 def check_proxy_validity(ip_port):
     # print ip_port
     service_args = ['--proxy=' + ip_port, '--proxy-type=socks5', ]
@@ -27,8 +32,10 @@ def check_proxy_validity(ip_port):
         ds.close()
         return False
 
-def update_proxy_list(outfile_buffer_name, outfile_name):
-
+#Update proxy list
+def update_proxy_list(outfile_buffer_name = 'proxy_list_buffer',\
+                      outfile_name = 'proxy_list', maxnum = 100):
+    ip_proxy_set = set()
     outfile_buffer = open(outfile_buffer_name, 'w')
     outfile = open(outfile_name, 'w')
 
@@ -53,6 +60,9 @@ def update_proxy_list(outfile_buffer_name, outfile_name):
                     ip_proxy_set.add(ip_port)
                     print >> outfile_buffer, ip_port
 
+            #If enough proxies are found then break
+            if len(ip_proxy_set) > maxnum:
+                break
                 
         except Exception as e:
             print str(e)
@@ -61,11 +71,40 @@ def update_proxy_list(outfile_buffer_name, outfile_name):
 
     for ip_port in ip_proxy_set:
         print >> outfile, ip_port
-         
 
+    return list(ip_proxy_set)
+
+
+#Load IP Proxy List
+def load_ip_proxy_list(infile_name):
+    ip_list = []
+    infile = open(infile_name)
+    for line in infile:
+        ip_list.append(line.strip())
+    return ip_list
+
+#Return a random proxy from the ip list
+def get_random_proxy(ip_list):
+    length = len(ip_list)
+    random_num = random.ranint(0, length)
+    return ip_list[random_num]
+
+
+def get_driver_with_random_proxy(ip_list):
+    ip_port = get_random_proxy(ip_list)
+    service_args = ['--proxy=' + ip_port, '--proxy-type=socks5', ]
+    ds = webdriver.PhantomJS(executable_path=phantomjs_path, service_args=service_args)
+    ds.implicitly_wait(10)
+    ds.set_page_load_timeout(10)
+    ds.maximize_window()
+    return ds
+
+'''
 if __name__ == '__main__':
 	
-    update_proxy_list('proxy_list_20160831_buffer', 'proxy_list_20160831')
+    update_proxy_list(outfile_buffer_name = 'proxy_list_buffer',\
+                      outfile_name = 'proxy_list', maxnum = 100)
+'''
 
 
 
