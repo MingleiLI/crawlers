@@ -59,8 +59,8 @@ def update_proxy_list(outfile_buffer_name, outfile_name):
             print "List End! Crawled " + str(len(ip_proxy_set)) + "free proxies!"
             break
 
-        for ip_port in ip_proxy_set:
-            print >> outfile, ip_port
+    for ip_port in ip_proxy_set:
+        print >> outfile, ip_port
          
 
 if __name__ == '__main__':
