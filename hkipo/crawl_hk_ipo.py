@@ -11,10 +11,10 @@ def get_sotcks_info(ds, outfile):
     stocks = ds.find_elements_by_xpath('//tr[@class="DR" or @class="ADR"]')
     for stock in stocks:
         strtmp = ''
-        for element in stock:
+        for element in stock.find_elements_by_xpath('.//td'):
             strtmp += '\t' + element.text.strip('"').strip()
         print strtmp
-        print >> outfile, strtmp
+        print >> outfile, strtmp.encode('utf-8')
     return 0
 
 def crawl_hk_ipo():
@@ -24,18 +24,20 @@ def crawl_hk_ipo():
     ds.set_page_load_timeout(10)
     ds.maximize_window()
     crawl_finish = 0
+    ds.get(start_link)
 
     while crawl_finish == 0:
-        ds.get(start_link)
-        get_sotcks_info(ds, outfile)
-        cur_page_num = str(ds.find_element_by_xpath('//div[@class="paging_cur"]').text)
+    	cur_page_num = str(ds.find_element_by_xpath('//div[@class="paging_cur"]').text)
         cur_page_num = int(cur_page_num)
-
+        print 'Crawling page ' + str(cur_page_num)
+        get_sotcks_info(ds, outfile)
+       
         try:
-            print 'Crawling page' + str(cur_page_num+1)
-            next_page_button = ds.find_element_by_xpath('//a[@href=""javascript:searchPage('+ str(cur_page_num+1) + ')]')
+            cur_page_num += 1
+            next_page_button = ds.find_element_by_xpath('//a[@href="javascript:searchPage('+ str(cur_page_num) + ')"]')
             next_page_button.click()
-        except:
+        except Exception as e:
+            #print str(e)
             print 'Crawling Finished!'
             crawl_finish = 1
 
