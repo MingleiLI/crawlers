@@ -53,23 +53,16 @@ def geettest_crack(driver):
     #driver.maximize_window()
 #     打开网页
     driver.get("http://www.geetest.com/mobile-pc")
-	login_button = driver.find_element_by_id("login")
-	login_button.click()
-   
+    login_button = driver.find_element_by_id("login")
+    login_button.click()
 
- 
-
-#     等待页面的上元素刷新出来
-    #WebDriverWait(driver, 30).until(lambda the_driver: the_driver.find_element_by_xpath("//div[@class='gt_slider_knob gt_show']").is_displayed())
-    #WebDriverWait(driver, 30).until(lambda the_driver: the_driver.find_element_by_xpath("//div[@class='gt_cut_bg gt_show']").is_displayed())
-    #WebDriverWait(driver, 30).until(lambda the_driver: the_driver.find_element_by_xpath("//div[@class='gt_cut_fullbg gt_show']").is_displayed())
 
     #To be replaced by wait until
     time.sleep(5)
 
 #     下载图片
  
-    captcha_el = driver.find_element_by_id("embed-captcha")
+    captcha_el = driver.find_element_by_xpath('//*[local-name() = "svg"]')
     location = captcha_el.location
     size = captcha_el.size
     left = int(location['x'])
@@ -80,8 +73,8 @@ def geettest_crack(driver):
     #dragger = driver.find_element_by_class_name("gt_slider_knob")
 
 
-    #element = driver.find_element_by_xpath('//*[local-name() = "circle"][@style="fill: rgb(255, 255, 255); stroke-width: 1.5;"]')
-    element = driver.find_element_by_xpath('//*[local-name() = "circle"][@style="fill: #ffffff; stroke-width: 1.5px;"]')
+    element = driver.find_element_by_xpath('//*[local-name() = "circle"][@style="fill: rgb(255, 255, 255); stroke-width: 1.5;"]')
+    #element = driver.find_element_by_xpath('//*[local-name() = "circle"][@style="fill: #ffffff; stroke-width: 1.5px;"]')
     driver.save_screenshot('screenshot1.png')
     img1 = Image.open('screenshot1.png')
     img1 = img1.crop((left, top, right, bottom))
@@ -98,12 +91,6 @@ def geettest_crack(driver):
     loc=get_diff_location(img1, img2)
     print 'Location is: ' + str(loc)
 
-#     生成x的移动轨迹点
-    track_list=get_track(loc)
-
-#     找到滑动的圆球
-    #element=driver.find_element_by_xpath("//div[@class='gt_slider_knob gt_show']")
-    #element = driver.find_element_by_xpath('//*[local-name() = "circle"][@style="fill: rgb(255, 255, 255); stroke-width: 1.5;"]')
     location=element.location
 #     获得滑动圆球的高度
     y=location['y']
@@ -162,8 +149,7 @@ def geettest_crack(driver):
    
     time.sleep(3)
 
-    submit=driver.find_element_by_id("embed-submit")
-    ActionChains(driver).click(on_element=submit).perform()
+    
 
     time.sleep(5)
     #print driver.current_url
