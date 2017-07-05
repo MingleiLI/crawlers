@@ -1,7 +1,7 @@
 #encoding = utf-8
 from selenium import webdriver
 import sys
-phantomjs_path = '/home/guan/Software/phantomjs-2.1.1-linux-x86_64/bin/phantomjs'
+phantomjs_path = '/home/gwang3/software/phantomjs-2.1.1-linux-x86_64/bin/phantomjs'
 target_link_1 = 'http://search.ccgp.gov.cn/bxsearch?searchtype=1&page_index='
 target_link_2 ='&bidSort=0&buyerName=&projectId=&pinMu=0&bidType=7&dbselect=bidx&kw=&start_time=2013%3A01%3A01&end_time=2017%3A07%3A05&timeType=6&displayZone=&zoneId=&pppStatus=0&agentName='
 index_range = 8000
@@ -40,7 +40,8 @@ if __name__ == "__main__":
             try:
                 crawl_ccgp(phantom_driver).crawl_list(target_link, outfile)
                 break
-            except:   
+            except Exception as e:
+                print e
                 fail_count += 1
                 print 'Fail ' + str(fail_count) + ' times at page ' + str(i)
         i += 1
