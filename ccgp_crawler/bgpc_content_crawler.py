@@ -11,6 +11,7 @@ class crawl_ccgp(object):
         self.ds.get(target_link)
         text = self.ds.find_element_by_xpath('//div[@class="content-right-details-content"]').text
         print >> outfile, str(text.encode('utf-8'))
+        self.ds.get('www.google.com')
                                             
         
         
@@ -22,16 +23,19 @@ if __name__ == "__main__":
     
     count = 0
     phantom_driver = webdriver.PhantomJS(executable_path=phantomjs_path)
-    infile = open('bgpc_list.txt')
+    infile = open('bgpc_list_it')
     for n, line in enumerate(infile):
+        #if n < 837:
+        #    continue
+        
         outfile = open('./text_data_bgpc/' + str(n), 'w')
-        title, target_link = line.strip().split('|')
-        print >> outfile, title
-        print >> outfile, '=========='
-        print 'Crawling Page ' + str(n) 
         fail_count = 0
         while(fail_count < 5):
-            try:
+            try:  
+                title, target_link = line.strip().split('|')
+                print >> outfile, title
+                print >> outfile, '=========='
+                print 'Crawling Page ' + str(n) 
                 crawl_ccgp(phantom_driver).crawl_list(target_link, outfile)
                 break
             except Exception as e:

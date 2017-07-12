@@ -28,7 +28,7 @@ if __name__ == "__main__":
             continue
         outfile = open('./text_data/' + str(n), 'w')
         title, target_link = line.strip().split('|')
-        print >> outfile, title
+        print >> outfile, title 
         print >> outfile, '=========='
         print 'Crawling Page ' + str(n) 
         fail_count = 0
