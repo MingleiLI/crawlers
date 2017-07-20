@@ -14,11 +14,13 @@ def get_sotcks_info(ds, outfile):
         for element in stock.find_elements_by_xpath('.//td'):
             strtmp += '\t' + element.text.strip('"').strip()
         print strtmp
-        print >> outfile, strtmp.encode('utf-8')
+        print >> outfile, strtmp.strip().encode('utf-8')
     return 0
 
 def crawl_hk_ipo():
-    outfile = open('hongkongipo', 'w')
+    outfile = open('../data/ipo_list', 'w')
+    header = 'date' + '\t' + 'code' + '\t' + 'name' + '\t' + 'category' + '\t' + 'ipo_price' + '\t' + 'buy_ratio' + '\t' + 'one_hand' + '\t' + 'draw_prob' + '\t' + 'firstday_performance' + '\t' + 'now_price' + '\t' + 'total_performance'
+    print >> outfile, header.encode('utf-8')
     ds = webdriver.PhantomJS(executable_path=phantomjs_path)
     ds.implicitly_wait(10)
     ds.set_page_load_timeout(10)
