@@ -17,3 +17,8 @@ Crawl CEO information from Bloomberg website
 * CCGP Crawler
 
 Crawl CCGP information
+
+
+* Mingluji Crawler
+
+Crawl Mingluji Company information
