@@ -8,9 +8,9 @@ class crawl_ccgp(object):
         self.ds = phantom_driver
         
     
-    def crawl_list(self, target_link, outfile_table, outfile_detail):
+    def crawl_list(self, target_link, outfile_table)#, outfile_detail):
         self.ds.get(target_link)
-        time.sleep(3)
+        #time.sleep(3)
         try:
             titles = self.ds.find_elements_by_xpath('//td[@class="title"]')
             contents = self.ds.find_elements_by_xpath('//td[@class="title"]/following-sibling::td')
@@ -24,8 +24,8 @@ class crawl_ccgp(object):
         except:
             print 'No Table!'
             
-        text = self.ds.find_element_by_xpath('//div[@class="vT_detail_content w760c"]').text
-        print >> outfile_detail, str(text.encode('utf-8'))
+        #text = self.ds.find_element_by_xpath('//div[@class="vT_detail_content w760c"]').text
+        #print >> outfile_detail, str(text.encode('utf-8'))
                                             
         
         
@@ -49,16 +49,20 @@ if __name__ == "__main__":
 
     service_args = []
     phantom_driver = webdriver.PhantomJS(executable_path=phantomjs_path, service_args=service_args)
-    phantom_driver.implicitly_wait(10)
-    phantom_driver.set_page_load_timeout(8)
+    #phantom_driver.implicitly_wait(5)
+    phantom_driver.set_page_load_timeout(5)
     phantom_driver.maximize_window()
     
-    infile = open('ccgp_list_fuwuqi_zbgg_1')
+    #infile = open('ccgp_list_fuwuqi_zbgg_1')
+    infile = open('ccgp_list_fuwuqi_gkzb_1')
     for n, line in enumerate(infile):
-        #if n < 116:
-        #    continue
-        outfile_table = open('./text_data_ccgp_fuwuqi_zbgg/' + str(n) + '_table', 'w')
-        outfile_detail = open('./text_data_ccgp_fuwuqi_zbgg/' + str(n) + '_detail', 'w')
+        #if n < 560:
+        if n < 625:
+            continue
+        #outfile_table = open('./text_data_ccgp_fuwuqi_zbgg/' + str(n) + '_table', 'w')
+        #outfile_detail = open('./text_data_ccgp_fuwuqi_zbgg/' + str(n) + '_detail', 'w')
+        outfile_table = open('./text_data_ccgp_fuwuqi_gkzb/' + str(n) + '_table', 'w')
+        #outfile_detail = open('./text_data_ccgp_fuwuqi_gkzb/' + str(n) + '_detail', 'w')
         title, target_link, loc = line.strip().split('|')
         
         print >> outfile_table, title
