@@ -180,8 +180,8 @@ def get_chrome_with_abuyun_proxy():
     proxyPort = "9020"
 
     # 代理隧道验证信息
-    proxyUser = "HK2R1464MBH8IW7D"
-    proxyPass = "5B17E21D33F06F92"
+    proxyUser = "xxxxxxxxxxxxxxx"
+    proxyPass = "xxxxxxxxxxxxxxx"
 
     service_args = [
         "--proxy-type=http",
