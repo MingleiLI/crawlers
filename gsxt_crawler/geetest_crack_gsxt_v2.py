@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import random
 from subprocess import call
 from bs4 import BeautifulSoup
-import update_proxy_ip_kuaidaili as driver_util
+import update_proxy_ip as driver_util
 
 os.chdir('.')
 
@@ -213,10 +213,11 @@ def geetest_go(driver):
 
 if __name__ == '__main__':
     #ip_list = driver_util.update_proxy_list_api()
-    ip_list = driver_util.load_ip_proxy_list("proxy_list")
+    #ip_list = driver_util.load_ip_proxy_list("proxy_list")
     while True:
         try:
-            driver = driver_util.get_chrome_with_random_proxy([])
+            #driver = driver_util.get_chrome_with_random_proxy([])
+            driver = driver_util.get_chrome_with_abuyun_proxy()
             for i in [u'招商银行', u'交通银行', u'中国银行']:
                 #driver.get("http://www.gsxt.gov.cn/index")
                 driver.get("http://sh.gsxt.gov.cn/notice")
